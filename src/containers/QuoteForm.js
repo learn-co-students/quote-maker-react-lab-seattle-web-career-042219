@@ -21,7 +21,7 @@ class QuoteForm extends Component {
     // Pass quote object to action creator
     // Update component state to return to default state
     event.preventDefault();
-    const quote = { ...this.state, id: uuid() };
+    const quote = { ...this.state, id: uuid(), votes: 0 };
     this.props.addQuote(quote);
     this.setState({ author: "", content: "" });
   };
@@ -66,7 +66,7 @@ class QuoteForm extends Component {
                   </div>
                   <div className="form-group">
                     <div className="col-md-6 col-md-offset-4">
-                      <button type="submit" className="btn btn-default">
+                      <button type="submit" className="btn btn-secondary">
                         Add
                       </button>
                     </div>
