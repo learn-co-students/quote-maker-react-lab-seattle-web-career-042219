@@ -9,19 +9,24 @@ export default (state = [], action) => {
     case "UPVOTE_QUOTE":
       index = state.findIndex(quote => quote.id === action.quoteId);
       quote = state[index];
+      quote.votes += 1;
       return [
-        ...state.slice(0, index),
-        Object.assign({}, quote, { votes: (quote.votes += 1) }),
-        ...state.slice(index + 1)
+        ...state.map(quoteInstance => {
+          return quoteInstance.id === action.quoteId ? quote : quoteInstance;
+        })
       ];
+
     case "DOWNVOTE_QUOTE":
       index = state.findIndex(quote => quote.id === action.quoteId);
       quote = state[index];
+      quote.votes -= 1;
       return quote.votes > 0
         ? [
-            ...state.slice(0, index),
-            Object.assign({}, quote, { votes: (quote.votes -= 1) }),
-            ...state.slice(index + 1)
+            ...state.map(quoteInstance => {
+              return quoteInstance.id === action.quoteId
+                ? quote
+                : quoteInstance;
+            })
           ]
         : state;
     default:
